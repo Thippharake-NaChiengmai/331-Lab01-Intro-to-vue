@@ -22,17 +22,17 @@
             </div>
         </div>
         <div class="product-info">
-            <h1><a :href="productLink" :style="{'text-decoration': 'none', 'color': '#282828'}">{{ product }}</a></h1>
+            <h1><a :href="productLink" :style="{'text-decoration': 'none', 'color': '#282828'}">{{ title }}</a></h1>
             <h3>{{ productDescription }}</h3>
             <p v-if="inventory > 10">In Stock</p>
             <p v-else-if="inventory <= 10 && inventory > 0">Almost out of Stock</p>
             <p v-else>Out of Stock</p>
-            <p v-if="onSale" :style="{'color': 'red', 'font-weight': 'bold'}">This product is on sale!</p>
+            <p v-if="onSale" :style="{'color': 'red', 'font-weight': 'bold'}">{{ saleMessage }}</p>
             <ul>
                 <li v-for="detail in details">{{ detail }}</li>
                 <li>Size: {{ sizesInLine }}</li>
             </ul>
-             <div v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)"
+             <div v-for="(variant,index) in variants" :key="variant.id" @mouseover="updateVariant(index)"
                 class="color-circle" :style="{ backgroundColor: variant.color }">
             </div>
                  <button class="button" :disabled='!inStock' @click="addToCart" :class="{ disabledButton: !inStock }">Add to Cart</button>
