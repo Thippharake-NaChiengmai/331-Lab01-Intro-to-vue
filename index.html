@@ -12,7 +12,7 @@
 
 <body>
     <div id="app">
-       <div class="nav-bar"></div>
+        <div class="nav-bar"></div>
         <div class="cart">Cart ({{ cart }})</div>
         <div class="product-display">
             <div class="product-container">
@@ -23,12 +23,16 @@
             </div>
         </div>
         <div class="product-info">
-            <h1 ><a :href="productLink" :style="{'text-decoration': 'none', 'color': '#282828'}">{{ product }}</a></h1>
+            <h1><a :href="productLink" :style="{'text-decoration': 'none', 'color': '#282828'}">{{ product }}</a></h1>
             <h3>{{ productDescription }}</h3>
-    </div>
+            <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Almost out of Stock</p>
+            <p v-else>Out of Stock</p>
+            <p v-if="onSale" :style="{'color': 'red', 'font-weight': 'bold'}">This product is on sale!</p>
+        </div>
 
-    <!-- Import Js -->
-    <script src="./main.js"></script>
+        <!-- Import Js -->
+        <script src="./main.js"></script>
 </body>
 
 </html>
