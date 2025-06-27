@@ -1,4 +1,4 @@
-const reviewForm = {
+const ReviewForm = {
     props: {
         productId: Number
     },

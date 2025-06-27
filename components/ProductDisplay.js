@@ -4,7 +4,7 @@ const ProductDisplay = {
     },
     components: {
         'product-details': ProductDetails,
-        'review-form': reviewForm
+        'review-form': ReviewForm
     },
     template: /*html*/
         `
