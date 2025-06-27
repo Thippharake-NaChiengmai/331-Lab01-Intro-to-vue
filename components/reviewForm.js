@@ -7,13 +7,13 @@ const ReviewForm = {
     <form class="review-form" @submit.prevent="onSubmit">
     <h3>Leave a Review</h3>
     <label for="name">Name:</label>
-    <input id="name" v-model="form.name">
+    <input id="name" v-model="name">
 
     <label for="review">Review:</label>
-    <textarea id="review" v-model="form.review"></textarea>
+    <textarea id="review" v-model="review"></textarea>
 
     <label for="rating">Rating:</label>
-    <select id="rating" v-model="form.rating">
+    <select id="rating" v-model="rating">
         <option value="5">5 Stars</option>
         <option value="4">4 Stars</option>
         <option value="3">3 Stars</option>
@@ -23,16 +23,16 @@ const ReviewForm = {
 
     <label>Would you recommend this product?</label>
       <div>
-        <input type="radio" id="recommend-yes" value="Yes" v-model="form.recommend">
+        <input type="radio" id="recommend-yes" value="Yes" v-model="recommend">
         <label for="recommend-yes">Yes</label>
-        <input type="radio" id="recommend-no" value="No" v-model="form.recommend">
+        <input type="radio" id="recommend-no" value="No" v-model="recommend">
         <label for="recommend-no">No</label>
       </div>
     <button class="submit-button" type="submit">Submit Review</button>
 </form>
 `,
     setup(_, { emit }) {
-        const { reactive } = Vue;
+        const { reactive, toRefs } = Vue;
         const form = reactive({
             name: '',
             review: '',
@@ -40,7 +40,7 @@ const ReviewForm = {
             recommend: null
         });
         const onSubmit = () => {
-             if (form.name === '' || form.review === '' || form.rating === null) {
+             if (form.name === '' || form.review === '' || form.rating === null || form.recommend === null) {
                 alert('Review is incomplete. Please fill out all fields.')
                 return
             }
@@ -58,8 +58,8 @@ const ReviewForm = {
         }
 
         return {
-            form,
-            onSubmit  
+            ...toRefs(form),
+        onSubmit
         }
     }
 }
