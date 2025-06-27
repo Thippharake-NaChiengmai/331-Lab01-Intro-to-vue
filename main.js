@@ -2,11 +2,15 @@
 const { createApp, ref, computed } = Vue;
 const app = createApp({
     setup() {
-        const cart = ref(0);
-        const premium = ref(true);
+        const cart = ref([]);
+        const premium = ref(false);
+        function updateCart(productId) {
+            cart.value.push(productId);
+        }
         return {
             cart,
-            premium
+            premium,
+            updateCart
         }
     }
 })

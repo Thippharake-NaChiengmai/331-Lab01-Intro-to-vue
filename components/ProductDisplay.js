@@ -2,6 +2,9 @@ const ProductDisplay = {
     props: {            
         premium: Boolean
     },
+    components: {
+    'product-details': ProductDetails
+  },
   template: /*html*/
   `
   <div class="product-display">
@@ -20,7 +23,8 @@ const ProductDisplay = {
             <p v-else>Out of Stock</p>
             <p v-if="onSale" :style="{'color': 'red', 'font-weight': 'bold'}">{{ saleMessage }}</p>
             <ul>
-                <li v-for="detail in details">{{ detail }}</li>
+            <product-details :details="details"></product-details>
+            <br>
                 <li>Size: {{ sizesInLine }}</li>
             </ul>
              <div v-for="(variant,index) in variants" :key="variant.id" @mouseover="updateVariant(index)"
@@ -32,7 +36,7 @@ const ProductDisplay = {
             </div>
         </div>
   `,
-     setup(props) {
+     setup(props, { emit }) {
         const { ref, computed } = Vue;
         const product = ref('Boots');
         const productDescription = ref('A pair of warm and comfortable boots for winter.');
@@ -70,7 +74,7 @@ const ProductDisplay = {
             return brand.value + ' ' + product.value;
         });
         function addToCart() {
-            cart.value += 1;
+            emit('add-to-cart', variants.value[selectedVariant.value].id);
         }
         function updateImage(variantImage) {
             image.value = variantImage;
