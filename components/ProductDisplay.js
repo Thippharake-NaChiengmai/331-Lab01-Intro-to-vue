@@ -1,4 +1,7 @@
 const ProductDisplay = {
+    props: {            
+        premium: Boolean
+    },
   template: /*html*/
   `
   <div class="product-display">
@@ -82,9 +85,10 @@ const ProductDisplay = {
 
         const Shipping = computed(() => {
           if (props.premium) {
-            return 'Free';
-          } 
-          return '30';
+            return '30'
+          } else {
+            return 'Free'
+          }
         });
 
         return {
