@@ -4,7 +4,8 @@ const ProductDisplay = {
     },
     components: {
         'product-details': ProductDetails,
-        'review-form': ReviewForm
+        'review-form': ReviewForm,
+        'review-list': ReviewList
     },
     template: /*html*/
         `
@@ -34,6 +35,7 @@ const ProductDisplay = {
                  <button class="button" :disabled='!inStock' @click="addToCart" :class="{ disabledButton: !inStock }">Add to Cart</button>
             <button class="button toggle" @click="toggleStock">{{ inventory > 0 ? 'In Stock' : 'Out of Stock' }}</button>
             <button class="button remove" @click="removeFromCart">Remove</button>
+            <review-list v-if="reviews.length" :reviews="reviews"></review-list>
             <review-form @review-submitted="addReview"></review-form>
             </div>
         </div>
@@ -75,6 +77,10 @@ const ProductDisplay = {
         const title = computed(() => {
             return brand.value + ' ' + product.value;
         });
+        const reviews = ref([]);
+        function addReview(productreview) {
+            reviews.value.push(productreview);
+        }
         function addToCart() {
             emit('add-to-cart', variants.value[selectedVariant.value].id);
         }
@@ -119,11 +125,13 @@ const ProductDisplay = {
             sizes,
             sizesInLine,
             title,
+            reviews,
             addToCart,
             removeFromCart,
             updateImage,
             updateVariant,
-            toggleStock
+            toggleStock,
+            addReview
         }
     }
 

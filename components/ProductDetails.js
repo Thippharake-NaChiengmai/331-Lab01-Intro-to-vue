@@ -2,7 +2,8 @@ const ProductDetails = {
   props: {
     details: Array 
   },
-  template: `
+  template: 
+  /*html*/`
     <div class="product-details">
       <h3>Product Details</h3>
       <ul>

@@ -7,7 +7,7 @@ const ReviewForm = {
     <form class="review-form">
     <h3>Leave a Review</h3>
     <label for="name">Name:</label>
-    <input id="name" v-moldel="form.name">
+    <input id="name" v-model="form.name">
 
     <label for="review">Review:</label>
     <textarea id="review" v-model="form.review"></textarea>
@@ -20,37 +20,46 @@ const ReviewForm = {
         <option value="2">2 Stars</option>
         <option value="1">1 Star</option>
     </select>
+
+    <label>Would you recommend this product?</label>
+      <div>
+        <input type="radio" id="recommend-yes" value="Yes" v-model="form.recommend">
+        <label for="recommend-yes">Yes</label>
+        <input type="radio" id="recommend-no" value="No" v-model="form.recommend">
+        <label for="recommend-no">No</label>
+      </div>
     <button class="submit-button" type="submit">Submit Review</button>
 </form>
 `,
     setup(_, { emit }) {
-        const { ref, reactive } = Vue;
-        const reviews = ref([]);
+        const { reactive } = Vue;
         const form = reactive({
             name: '',
             review: '',
-            rating: null
+            rating: null,
+            recommend: null
         });
         const onSubmit = () => {
+             if (form.name === '' || form.review === '' || form.rating === null) {
+                alert('Review is incomplete. Please fill out all fields.')
+                return
+            }
             const productreview = {
                 name: form.name,
                 review: form.review,
-                rating: form.rating
-            };
-            emit('submit-review', productreview);
+                rating: form.rating,
+                recommend: form.recommend
+            }
+            emit('review-submitted', productreview);
             form.name = '';
             form.review = '';
             form.rating = null;
-        }
-        function addReview(productreview) {
-            reviews.value.push(productreview);
+            form.recommend = null;
         }
 
         return {
             form,
-            reviews,
-            onSubmit,   
-            addReview
+            onSubmit  
         }
     }
 }
