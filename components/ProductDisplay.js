@@ -1,12 +1,12 @@
 const ProductDisplay = {
-    props: {            
+    props: {
         premium: Boolean
     },
     components: {
-    'product-details': ProductDetails
-  },
-  template: /*html*/
-  `
+        'product-details': ProductDetails
+    },
+    template: /*html*/
+        `
   <div class="product-display">
             <div class="product-container">
             <p>Shipping: {{ Shipping }}</p>
@@ -32,11 +32,11 @@ const ProductDisplay = {
             </div>
                  <button class="button" :disabled='!inStock' @click="addToCart" :class="{ disabledButton: !inStock }">Add to Cart</button>
             <button class="button toggle" @click="toggleStock">{{ inventory > 0 ? 'In Stock' : 'Out of Stock' }}</button>
-
+            <button class="button remove" @click="removeFromCart">Remove from Cart</button>
             </div>
         </div>
   `,
-     setup(props, { emit }) {
+    setup(props, { emit }) {
         const { ref, computed } = Vue;
         const product = ref('Boots');
         const productDescription = ref('A pair of warm and comfortable boots for winter.');
@@ -53,8 +53,8 @@ const ProductDisplay = {
             return variants.value[selectedVariant.value].quantity;
         });
         const saleMessage = computed(() =>
-  onSale.value ? `${brand.value} ${product.value} is on sale!` : ''
-)
+            onSale.value ? `${brand.value} ${product.value} is on sale!` : ''
+        )
         const details = ref([
             '50% cotton',
             '30% wool',
@@ -64,7 +64,7 @@ const ProductDisplay = {
                 id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50
             },
             {
-                id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0
+                id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 10
             }
         ]);
         const selectedVariant = ref(0);
@@ -76,6 +76,11 @@ const ProductDisplay = {
         function addToCart() {
             emit('add-to-cart', variants.value[selectedVariant.value].id);
         }
+
+        function removeFromCart () {
+      emit('remove-from-cart', variants.value[selectedVariant.value].id)
+    }
+
         function updateImage(variantImage) {
             image.value = variantImage;
         }
@@ -88,11 +93,11 @@ const ProductDisplay = {
         }
 
         const Shipping = computed(() => {
-          if (props.premium) {
-            return '30'
-          } else {
-            return 'Free'
-          }
+            if (props.premium) {
+                return '30'
+            } else {
+                return 'Free'
+            }
         });
 
         return {
@@ -113,6 +118,7 @@ const ProductDisplay = {
             sizesInLine,
             title,
             addToCart,
+            removeFromCart,
             updateImage,
             updateVariant,
             toggleStock

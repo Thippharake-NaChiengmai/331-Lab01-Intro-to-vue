@@ -12,9 +12,25 @@
 
 <body>
     <div id="app">
-        <div class="nav-bar"></div>
-        <div class="cart">Cart ({{ cart }})</div>
-        <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+        <header>
+            <div class="nav-bar">
+                <h1>SE331 Product Shop</h1>
+            </div>
+            <div class="cart">
+                <strong>Cart:</strong>
+                <template v-if="cart.length === 0">
+                    <span>Your cart is empty.</span>
+                </template>
+                <template v-else>
+                    <ul>
+                        <li v-for="(count, id) in productCounts" :key="id">
+                            Product {{ id }}: <strong>{{ count }}</strong>
+                        </li>
+                    </ul>
+                </template>
+            </div>
+        </header>
+        <product-display :premium="premium" @add-to-cart="updateCart" @remove-from-cart="remove"></product-display>
     </div>
 
     <!-- Import Js -->

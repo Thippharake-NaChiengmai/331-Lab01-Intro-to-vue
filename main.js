@@ -7,10 +7,25 @@ const app = createApp({
         function updateCart(productId) {
             cart.value.push(productId);
         }
+
+        const productCounts = computed(() => {
+      const counts = {}
+      cart.value.forEach(id => { counts[id] = (counts[id] || 0) + 1 })
+      return counts      
+    })
+
+    function add(id)    { cart.value.push(id) }
+    function remove(id) {
+      const idx = cart.value.indexOf(id)
+      if (idx !== -1) cart.value.splice(idx, 1)
+    }
         return {
             cart,
             premium,
-            updateCart
+            productCounts,
+            updateCart,
+            add,
+            remove             
         }
     }
 })
