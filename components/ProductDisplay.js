@@ -3,7 +3,8 @@ const ProductDisplay = {
         premium: Boolean
     },
     components: {
-        'product-details': ProductDetails
+        'product-details': ProductDetails,
+        'review-form': reviewForm
     },
     template: /*html*/
         `
@@ -32,7 +33,8 @@ const ProductDisplay = {
             </div>
                  <button class="button" :disabled='!inStock' @click="addToCart" :class="{ disabledButton: !inStock }">Add to Cart</button>
             <button class="button toggle" @click="toggleStock">{{ inventory > 0 ? 'In Stock' : 'Out of Stock' }}</button>
-            <button class="button remove" @click="removeFromCart">Remove from Cart</button>
+            <button class="button remove" @click="removeFromCart">Remove</button>
+            <review-form @review-submitted="addReview"></review-form>
             </div>
         </div>
   `,
